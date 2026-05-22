@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server"
-import { nanoid } from "nanoid"
 import { createDb } from "@/lib/db"
 import { emails } from "@/lib/schema"
 import { eq, and, gt, sql } from "drizzle-orm"
@@ -9,6 +8,7 @@ import { getRequestContext } from "@cloudflare/next-on-pages"
 import { getUserId } from "@/lib/apiKey"
 import { getUserRole } from "@/lib/auth"
 import { ROLES } from "@/lib/permissions"
+import { generateRandomUsername } from "@/lib/utils"
 
 export const runtime = "edge"
 
@@ -63,7 +63,7 @@ export async function POST(request: Request) {
       )
     }
 
-    const address = `${name || nanoid(8)}@${domain}`
+    const address = `${name || generateRandomUsername()}@${domain}`
     const existingEmail = await db.query.emails.findFirst({
       where: eq(sql`LOWER(${emails.address})`, address.toLowerCase())
     })
