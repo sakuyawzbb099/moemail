@@ -9,4 +9,4 @@ export const EMAIL_CONFIG = {
   },
 } as const
 
-export type EmailConfig = typeof EMAIL_CONFIG 
+export type EmailConfig = typeof EMAIL_CONFIG
