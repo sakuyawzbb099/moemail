@@ -7,13 +7,13 @@ import { Input } from "@/components/ui/input"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Copy, Plus, RefreshCw } from "lucide-react"
 import { useToast } from "@/components/ui/use-toast"
-import { nanoid } from "nanoid"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { EXPIRY_OPTIONS } from "@/types/email"
 import { useCopy } from "@/hooks/use-copy"
 import { useConfig } from "@/hooks/use-config"
+import { generateRandomUsername } from "@/lib/utils"
 
 interface CreateDialogProps {
   onEmailCreated: () => void
@@ -32,7 +32,7 @@ export function CreateDialog({ onEmailCreated }: CreateDialogProps) {
   const { toast } = useToast()
   const { copyToClipboard } = useCopy()
 
-  const generateRandomName = () => setEmailName(nanoid(8))
+  const generateRandomName = () => setEmailName(generateRandomUsername())
 
   const copyEmailAddress = () => {
     copyToClipboard(`${emailName}@${currentDomain}`)
@@ -185,4 +185,4 @@ export function CreateDialog({ onEmailCreated }: CreateDialogProps) {
       </DialogContent>
     </Dialog>
   )
-} 
+}
